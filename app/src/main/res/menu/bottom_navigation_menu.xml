@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mhome"
+        android:icon="@drawable/home_selector"
+        android:title="@string/str_Home" />
+
+    <item
+        android:id="@+id/mlearn"
+        android:icon="@drawable/learn_selector"
+        android:title="@string/str_Learn" />
+
+    <item
+        android:id="@+id/mtelevison"
+        android:icon="@drawable/tv_selector"
+        android:title="@string/str_Television" />
+
+    <item
+        android:id="@+id/mtrading"
+        android:icon="@drawable/trading_selector"
+        android:title="@string/str_Trading"
+        />
+
+    <item
+        android:id="@+id/mnews"
+        android:icon="@drawable/news_selector"
+        android:title="@string/str_News" />
+
+
+</menu>
