@@ -12,32 +12,45 @@ import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import android.graphics.Bitmap
 import android.view.*
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.app.share.interfaces.HomeFragmentCallback
 
-class TradingFragment1 : Fragment() {
+class TradingFragment1(var homeCallback: HomeFragmentCallback) : Fragment() {
     var webView: WebView? = null
     var webURL: String? = "https://www.amazon.in/"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
+    var ivBack: ImageView? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_trading1, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         webView = view.findViewById(R.id.webview)
         swipeRefreshLayout = view.findViewById(R.id.swipe)
-        swipeRefreshLayout?.setOnRefreshListener(OnRefreshListener {
+        swipeRefreshLayout?.setOnRefreshListener {
             webURL = webView?.url
             refreshWebView()
             swipeRefreshLayout?.isRefreshing = false
-        })
+        }
         progressBar = view.findViewById(R.id.seekbar)
         webView = view.findViewById(R.id.webview)
+        ivBack = view.findViewById(R.id.ivBack)
+
+        ivBack?.setOnClickListener {
+            if (webView?.canGoBack()!!) {
+                webView?.goBack()
+            } else {
+                homeCallback.onBackPressedClicked()
+            }
+        }
+
         setWebView()
     }
 

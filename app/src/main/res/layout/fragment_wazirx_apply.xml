@@ -73,7 +73,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_weight="1"
-            android:backgroundTint="@color/darkGray"
+            android:backgroundTint="@color/green"
             android:text="Apply" />
 
         <Button
@@ -82,7 +82,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_weight="1"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/darkGray"
             android:text="How to Apply" />
 
     </LinearLayout>

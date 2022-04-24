@@ -18,7 +18,7 @@ import com.app.share.interfaces.Button1FragmentCallbacks
 class WazirxApplyFragment(var callback: Button1FragmentCallbacks) : Fragment() {
     var webView: WebView? = null
     var webURL: String? =
-        "https://github.com/hbb20/CountryCodePickerProject/wiki/How-to-integrate-into-your-project/"
+        "https://best.aliexpress.com/?af=34745&dp=afffe11678d64c40be119f0121a72101&cn=102425&aff_fcid=8e306ae0430f4ae99987a6ba7d7e9312-1650759376484-04882-_pJQpbgG&aff_fsk=_pJQpbgG&aff_platform=api-new-link-generate&sk=_pJQpbgG&aff_trace_key=8e306ae0430f4ae99987a6ba7d7e9312-1650759376484-04882-_pJQpbgG&terminal_id=de3cf87b546c49d482ba4e397db9b9ac"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
 

@@ -1,66 +1,46 @@
-package com.app.share.fragments;
+package com.app.share.fragments
 
-import android.os.Bundle;
+import com.app.share.fragments.TradingFragment.TradingFragmentButtonCallbacks
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import com.app.share.R
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+class TradingFragment : Fragment {
+    var btn1: Button? = null
+    var btn2: Button? = null
+    var callback: TradingFragmentButtonCallbacks? = null
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
-import com.app.share.R;
-import com.app.share.fragments.tradingFragments.TradingFragment1;
-import com.app.share.fragments.tradingFragments.TradingFragment2;
-
-public class TradingFragment extends Fragment  {
-    View view;
-    Button btn1, btn2;
-    TradingFragment1 tradingFragment1;
-    TradingFragment2 tradingFragment2;
-    TradingFragmentButtonCallbacks callback;
-
-    public TradingFragment() {
+    constructor() {}
+    constructor(callback: TradingFragmentButtonCallbacks?) {
+        this.callback = callback
     }
 
-    public TradingFragment(TradingFragmentButtonCallbacks callback) {
-        this.callback = callback;
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_trading, container, false)
+
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_trading, container, false);
-        return view;
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        btn1 = view.findViewById(R.id.btn1)
+        btn2 = view.findViewById(R.id.btn2)
+        btn1?.setOnClickListener { v: View? -> callback!!.onBtn1Clicked() }
+        btn2?.setOnClickListener { v: View? -> callback!!.onBtn2Clicked() }
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        btn1 = view.findViewById(R.id.btn1);
-        btn2 = view.findViewById(R.id.btn2);
-
-        btn1.setOnClickListener(v -> {
-            callback.onBtn1Clicked();
-        });
-
-        btn2.setOnClickListener(v -> {
-            callback.onBtn2Clicked();
-        });
+    override fun onResume() {
+        super.onResume()
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    public interface TradingFragmentButtonCallbacks {
-        void onBtn1Clicked();
-
-        void onBtn2Clicked();
+    interface TradingFragmentButtonCallbacks {
+        fun onBtn1Clicked()
+        fun onBtn2Clicked()
     }
 }

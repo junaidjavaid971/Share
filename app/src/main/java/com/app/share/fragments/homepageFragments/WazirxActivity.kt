@@ -15,93 +15,84 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.share.R
+import com.app.share.fragments.homepageFragments.button1Fragments.*
 import com.app.share.interfaces.Button1FragmentCallbacks
 import com.app.share.interfaces.HomeFragmentCallback
 
-class WazirxActivity : AppCompatActivity() {
+class WazirxActivity : AppCompatActivity(), Button1FragmentCallbacks {
     var webView: WebView? = null
     var ivBack: ImageView? = null
     var webURL: String? = "https://www.google.com/"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
 
+    var currentFragment: Fragment? = null
+
+    lateinit var wazirxFragment: WazirxFragment
+    lateinit var wazirxApplyFragment: WazirxApplyFragment
+    lateinit var wazirxHtaFragment: WazirxHtaFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_wazirx)
+        setContentView(R.layout.activity_upstox)
 
-        webView = findViewById(R.id.webview)
-        swipeRefreshLayout = findViewById(R.id.swipe)
-        ivBack = findViewById(R.id.ivBack)
-
-        swipeRefreshLayout?.setOnRefreshListener {
-            webURL = webView?.url
-            refreshWebView()
-            swipeRefreshLayout?.isRefreshing = false
-        }
-
-        ivBack?.setOnClickListener {
-            if (webView?.canGoBack()!!) {
-                webView?.goBack()
-            } else {
-                onBackPressed()
-            }
-        }
-        progressBar = findViewById(R.id.seekbar)
-        webView = findViewById(R.id.webview)
-
-        setWebView()
+        addFragments()
+        replaceFragment(wazirxFragment)
     }
 
-    private fun refreshWebView() {
-        webView!!.webViewClient = webViewClient
-        webView!!.loadUrl(webURL!!)
+    private fun addFragments() {
+        wazirxFragment = WazirxFragment(this)
+        wazirxApplyFragment = WazirxApplyFragment(this)
+        wazirxHtaFragment = WazirxHtaFragment(this)
+
+        val ft = supportFragmentManager.beginTransaction()
+
+        ft.add(R.id.flLayout, wazirxFragment)
+        ft.add(R.id.flLayout, wazirxApplyFragment)
+        ft.add(R.id.flLayout, wazirxHtaFragment)
+        ft.commit()
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun setWebView() {
-        webView?.webViewClient = webViewClient
-        webView!!.settings.setRenderPriority(WebSettings.RenderPriority.HIGH)
-        webView!!.settings.javaScriptEnabled = true
-        webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-        webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-        webView!!.settings.setAppCacheEnabled(true)
-        webView!!.settings.domStorageEnabled = true
-        webView!!.overScrollMode = WebView.OVER_SCROLL_NEVER
+    private fun replaceFragment(fragment: Fragment) {
+        val ft = supportFragmentManager.beginTransaction()
 
-        webView!!.webChromeClient = webChromeClient
+        ft.hide(wazirxFragment)
+        ft.hide(wazirxApplyFragment)
+        ft.hide(wazirxHtaFragment)
 
-        webView!!.setOnKeyListener { v: View?, keyCode: Int, event: KeyEvent ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == MotionEvent.ACTION_UP && webView!!.canGoBack()) {
-                webView!!.goBack()
-                return@setOnKeyListener true
-            }
-            false
-        }
-
-        webView!!.loadUrl(webURL.toString())
+        ft.show(fragment)
+        ft.commit()
     }
 
-    val webChromeClient = object : WebChromeClient() {
-        override fun onProgressChanged(view: WebView, progress: Int) {
-            progressBar!!.progress = progress
-            if (progress == 100) progressBar!!.visibility = View.GONE
+    override fun onBackPressed() {
+        if (currentFragment is WazirxApplyFragment || currentFragment is WazirxHtaFragment) {
+            replaceFragment(wazirxFragment)
+        } else {
+            super.onBackPressed()
         }
     }
-    val webViewClient = object : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            view?.loadUrl(url.toString())
-            return true
-        }
 
-        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-            super.onPageStarted(view, url, favicon)
-            progressBar!!.visibility = View.VISIBLE
-        }
+    override fun onUpstoxApplyClicked() {
+    }
 
-        override fun onPageFinished(view: WebView?, url: String?) {
-            super.onPageFinished(view, url)
-            progressBar!!.visibility = View.GONE
-        }
+    override fun onUpstoxHTAClicked() {
+    }
+
+    override fun onZerodhaApplyClicked() {
+
+    }
+
+    override fun onZerodhaHtaClicked() {
+
+    }
+
+    override fun onWazirxApplyClicked() {
+        currentFragment = wazirxApplyFragment
+        replaceFragment(wazirxApplyFragment)
+    }
+
+    override fun onWazirxHtaClicked() {
+        currentFragment = wazirxHtaFragment
+        replaceFragment(wazirxHtaFragment)
     }
 }

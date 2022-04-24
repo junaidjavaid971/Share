@@ -11,40 +11,46 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.share.R
-import com.app.share.fragments.HomeFragment
 import com.app.share.interfaces.HomeFragmentCallback
 
-class AllPatternActivity : AppCompatActivity() {
+class BullPatternFragment(var homeCallback: HomeFragmentCallback) : Fragment() {
     var webView: WebView? = null
     var ivBack: ImageView? = null
     var webURL: String? = "https://www.amazon.in/"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_bull_pattern, container, false)
+        return view
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_all_pattern)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        webView = view.findViewById(R.id.webview)
+        swipeRefreshLayout = view.findViewById(R.id.swipe)
+        ivBack = view.findViewById(R.id.ivBack)
 
-        webView = findViewById(R.id.webview)
-        ivBack = findViewById(R.id.ivBack)
-
-        swipeRefreshLayout = findViewById(R.id.swipe)
         swipeRefreshLayout?.setOnRefreshListener {
             webURL = webView?.url
             refreshWebView()
             swipeRefreshLayout?.isRefreshing = false
         }
+
         ivBack?.setOnClickListener {
             if (webView?.canGoBack()!!) {
                 webView?.goBack()
             } else {
-                onBackPressed()
+                homeCallback.onBackPressedClicked()
             }
         }
-        progressBar = findViewById(R.id.seekbar)
+
+        progressBar = view.findViewById(R.id.seekbar)
+        webView = view.findViewById(R.id.webview)
         setWebView()
     }
 

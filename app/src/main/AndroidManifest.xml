@@ -43,7 +43,7 @@
             android:name=".fragments.homepageFragments.Banner2Activity"
             android:exported="false" />
         <activity
-            android:name=".fragments.homepageFragments.BearCandleActivity"
+            android:name=".fragments.homepageFragments.BearCandleFragment"
             android:exported="false" />
         <activity
             android:name=".fragments.homepageFragments.BearPatternActivity"

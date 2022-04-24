@@ -9,44 +9,40 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.share.R
 import com.app.share.interfaces.HomeFragmentCallback
 
-class OptionChainActivity : AppCompatActivity() {
+class BullCandleFragment(var homeCallback: HomeFragmentCallback) : Fragment() {
     var webView: WebView? = null
-    var ivBack: ImageView? = null
-    var webURL: String? = "https://www.amazon.in/"
+    var webURL: String? =
+        "https://amazon.com"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_option_chain)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_bull_candle, container, false)
+        return view
+    }
 
-        webView = findViewById(R.id.webview)
-        swipeRefreshLayout = findViewById(R.id.swipe)
-        ivBack = findViewById(R.id.ivBack)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        webView = view.findViewById(R.id.webview)
+        swipeRefreshLayout = view.findViewById(R.id.swipe)
         swipeRefreshLayout?.setOnRefreshListener {
             webURL = webView?.getUrl()
             refreshWebView()
             swipeRefreshLayout?.isRefreshing = false
         }
+        progressBar = view.findViewById(R.id.seekbar)
+        webView = view.findViewById(R.id.webview)
 
-        ivBack?.setOnClickListener {
-            if (webView?.canGoBack()!!) {
-                webView?.goBack()
-            } else {
-                onBackPressed()
-            }
-        }
-
-        progressBar = findViewById(R.id.seekbar)
-        webView = findViewById(R.id.webview)
         setWebView()
     }
 

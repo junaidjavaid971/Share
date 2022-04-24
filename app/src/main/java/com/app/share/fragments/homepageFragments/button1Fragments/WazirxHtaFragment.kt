@@ -17,7 +17,8 @@ import com.app.share.interfaces.Button1FragmentCallbacks
 
 class WazirxHtaFragment(var callbacks: Button1FragmentCallbacks) : Fragment() {
     var webView: WebView? = null
-    var webURL: String? = "https://www.svgrepo.com/vectors/user/"
+    var webURL: String? =
+        "https://sp.booking.com/index.html?aid=1535067&label=enxl-edge-ntp-topsites-curate-ana"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
 

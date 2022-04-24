@@ -29,7 +29,7 @@ class UpstoxFragment(var callbacks: Button1FragmentCallbacks) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_upstox_apply, container, false)
+        val view = inflater.inflate(R.layout.fragment_upstox, container, false)
         return view
     }
 
@@ -46,6 +46,7 @@ class UpstoxFragment(var callbacks: Button1FragmentCallbacks) : Fragment() {
         webView = view.findViewById(R.id.webview)
 
         btnHowToApply = view.findViewById(R.id.btnHowToApply)
+        btnApply = view.findViewById(R.id.btnApply)
 
         setWebView()
         manageClicks()
@@ -54,6 +55,9 @@ class UpstoxFragment(var callbacks: Button1FragmentCallbacks) : Fragment() {
     private fun manageClicks() {
         btnHowToApply.setOnClickListener {
             callbacks.onUpstoxHTAClicked()
+        }
+        btnApply.setOnClickListener {
+            callbacks.onUpstoxApplyClicked()
         }
     }
 

@@ -51,19 +51,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var tradingFragment2: TradingFragment2? = null
 
     //HomeFragments
-    var allPatternActivity: AllPatternActivity? = null
+    var allPatternFragment: AllPatternFragment? = null
     var banner2Activity: Banner2Activity? = null
-    var bearCandleActivity: BearCandleActivity? = null
-    var bearPatternActivity: BearPatternActivity? = null
-    var bullCandleActivity: BullCandleActivity? = null
-    var bullPatternActivity: BullPatternActivity? = null
+    var bearCandleFragment: BearCandleFragment? = null
+    var bearPatternFragment: BearPatternFragment? = null
+    var bullCandleFragment: BullCandleFragment? = null
+    var bullPatternFragment: BullPatternFragment? = null
     var link1Activity: Link1Activity? = null
     var link2Activity: Link2Activity? = null
     var link3Activity: Link3Activity? = null
     var link4Activity: Link4Activity? = null
     var link5Activity: Link5Activity? = null
     var link6Activity: Link6Activity? = null
-    var optionChainActivity: OptionChainActivity? = null
+    var optionChainFragment: OptionChainFragment? = null
 
     //    var upstoxFragment: UpstoxFragment? = null
     var wazirxActivity: WazirxActivity? = null
@@ -100,23 +100,24 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         homeFragment = HomeFragment(this)
         newsFragment = NewsFragment()
         tradingFragment = TradingFragment(this)
-        tradingFragment1 = TradingFragment1()
-        tradingFragment2 = TradingFragment2()
+        tradingFragment1 = TradingFragment1(this)
+        tradingFragment2 = TradingFragment2(this)
+        bullCandleFragment = BullCandleFragment(this)
+        bearCandleFragment = BearCandleFragment(this)
+        optionChainFragment = OptionChainFragment(this)
+        bullPatternFragment = BullPatternFragment(this)
+        bearPatternFragment = BearPatternFragment(this)
+        allPatternFragment = AllPatternFragment(this)
 
         //Home Fragments
-        /*allPatternActivity = AllPatternActivity(this)
+        /*
         banner2Activity = Banner2Activity(this)
-        bearCandleActivity = BearCandleActivity(this)
-        bearPatternActivity = BearPatternActivity(this)
-        bullCandleActivity = BullCandleActivity(this)
-        bullPatternActivity = BullPatternActivity(this)
         link1Activity = Link1Activity(this)
         link2Activity = Link2Activity(this)
         link3Activity = Link3Activity(this)
         link4Activity = Link4Activity(this)
         link5Activity = Link5Activity(this)
         link6Activity = Link6Activity(this)
-        optionChainActivity = OptionChainActivity(this)
         upstoxFragment = UpstoxFragment(this, this)
         wazirxActivity = WazirxActivity(this, this)
         zerodhaActivity = ZerodhaActivity(this, this)*/
@@ -137,20 +138,21 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ft.add(R.id.flLayout, tradingFragment!!)
         ft.add(R.id.flLayout, tradingFragment1!!)
         ft.add(R.id.flLayout, tradingFragment2!!)
+        ft.add(R.id.flLayout, bullCandleFragment!!)
+        ft.add(R.id.flLayout, bearCandleFragment!!)
+        ft.add(R.id.flLayout, optionChainFragment!!)
+        ft.add(R.id.flLayout, bullPatternFragment!!)
+        ft.add(R.id.flLayout, bearPatternFragment!!)
+        ft.add(R.id.flLayout, allPatternFragment!!)
 
-        /*ft.add(R.id.flLayout, allPatternActivity!!)
+        /*
         ft.add(R.id.flLayout, banner2Activity!!)
-        ft.add(R.id.flLayout, bearCandleActivity!!)
-        ft.add(R.id.flLayout, bearPatternActivity!!)
-        ft.add(R.id.flLayout, bullCandleActivity!!)
-        ft.add(R.id.flLayout, bullPatternActivity!!)
         ft.add(R.id.flLayout, link1Activity!!)
         ft.add(R.id.flLayout, link2Activity!!)
         ft.add(R.id.flLayout, link3Activity!!)
         ft.add(R.id.flLayout, link4Activity!!)
         ft.add(R.id.flLayout, link5Activity!!)
         ft.add(R.id.flLayout, link6Activity!!)
-        ft.add(R.id.flLayout, optionChainActivity!!)
         ft.add(R.id.flLayout, upstoxFragment!!)
         ft.add(R.id.flLayout, wazirxActivity!!)
         ft.add(R.id.flLayout, zerodhaActivity!!)*/
@@ -189,19 +191,21 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ft.hide(tradingFragment!!)
         ft.hide(tradingFragment1!!)
         ft.hide(tradingFragment2!!)
-        /*ft.hide(allPatternActivity!!)
+        ft.hide(bullCandleFragment!!)
+        ft.hide(bearCandleFragment!!)
+        ft.hide(optionChainFragment!!)
+        ft.hide(bullPatternFragment!!)
+        ft.hide(bearPatternFragment!!)
+        ft.hide(allPatternFragment!!)
+
+        /*
         ft.hide(banner2Activity!!)
-        ft.hide(bearCandleActivity!!)
-        ft.hide(bearPatternActivity!!)
-        ft.hide(bullCandleActivity!!)
-        ft.hide(bullPatternActivity!!)
         ft.hide(link1Activity!!)
         ft.hide(link2Activity!!)
         ft.hide(link3Activity!!)
         ft.hide(link4Activity!!)
         ft.hide(link5Activity!!)
         ft.hide(link6Activity!!)
-        ft.hide(optionChainActivity!!)
         ft.hide(upstoxFragment!!)
         ft.hide(wazirxActivity!!)
         ft.hide(zerodhaActivity!!)*/
@@ -230,19 +234,24 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mhome -> {
-                /*if (currentFragment is AllPatternActivity) {
-                    replaceFragment(allPatternActivity)
-                } else if (currentFragment is Banner2Activity) {
+                if (currentFragment is BullCandleFragment) {
+                    replaceFragment(bullCandleFragment)
+                } else if (currentFragment is BearCandleFragment) {
+                    replaceFragment(bearCandleFragment)
+                } else if (currentFragment is OptionChainFragment) {
+                    replaceFragment(optionChainFragment)
+                } else if (currentFragment is BullPatternFragment) {
+                    replaceFragment(bullPatternFragment)
+                } else if (currentFragment is BearPatternFragment) {
+                    replaceFragment(bearPatternFragment)
+                } else if (currentFragment is AllPatternFragment) {
+                    replaceFragment(allPatternFragment)
+                } else {
+                    replaceFragment(homeFragment)
+                }
+                /*else if (currentFragment is Banner2Activity) {
                     replaceFragment(banner2Activity)
-                } else if (currentFragment is BearCandleActivity) {
-                    replaceFragment(bearCandleActivity)
-                } else if (currentFragment is BearPatternActivity) {
-                    replaceFragment(bearPatternActivity)
-                } else if (currentFragment is BullCandleActivity) {
-                    replaceFragment(bullCandleActivity)
-                } else if (currentFragment is BullPatternActivity) {
-                    replaceFragment(bullPatternActivity)
-                } else if (currentFragment is Link1Activity) {
+                }else if (currentFragment is Link1Activity) {
                     replaceFragment(link1Activity)
                 } else if (currentFragment is Link2Activity) {
                     replaceFragment(link2Activity)
@@ -254,9 +263,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     replaceFragment(link5Activity)
                 } else if (currentFragment is Link6Activity) {
                     replaceFragment(link6Activity)
-                } else if (currentFragment is OptionChainActivity) {
-                    replaceFragment(optionChainActivity)
-                }*//* else if (currentFragment is UpstoxFragment) {
+                } }*//* else if (currentFragment is UpstoxFragment) {
                     replaceFragment(upstoxFragment)
                 }*//* else if (currentFragment is WazirxActivity) {
                     replaceFragment(wazirxActivity)
@@ -274,11 +281,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     replaceFragment(upstoxHtaFragment)
                 } else if (currentFragment is UpstoxApplyFragment) {
                     replaceFragment(upstoxApplyFragment)
-                } else {
-                    replaceFragment(homeFragment)
                 }*/
-
-                replaceFragment(homeFragment)
                 toolbar!!.visibility = View.GONE
                 return true
             }
@@ -298,11 +301,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 } else if (currentFragment is TradingFragment2) {
                     replaceFragment(tradingFragment2)
                 } else {
-                    showDisclaimerPopup(
-                        "Disclaimer",
-                        "We do not own demo Website (Virtual Trading Platform)",
-                        this
-                    )
+                    replaceFragment(tradingFragment)
                 }
                 toolbar!!.visibility = View.GONE
                 return true
@@ -321,17 +320,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             replaceFragment(tradingFragment)
             currentFragment = tradingFragment
             return
-        }/* else if (currentFragment is AllPatternActivity || currentFragment is Banner2Activity || currentFragment is BearCandleActivity
-            || currentFragment is BearPatternActivity || currentFragment is BullCandleActivity || currentFragment is BullPatternActivity
-            || currentFragment is Link1Activity || currentFragment is Link2Activity || currentFragment is Link3Activity
-            || currentFragment is Link4Activity || currentFragment is Link5Activity || currentFragment is Link6Activity
-            || currentFragment is OptionChainActivity /*|| currentFragment is UpstoxFragment*/ || currentFragment is WazirxActivity
-            || currentFragment is ZerodhaActivity
+        } else if (currentFragment is BullCandleFragment || currentFragment is BearCandleFragment || currentFragment is OptionChainFragment
+            || currentFragment is BullPatternFragment || currentFragment is BearPatternFragment || currentFragment is AllPatternFragment
         ) {
             replaceFragment(homeFragment)
             currentFragment = homeFragment
             return
-        } else if (currentFragment is UpstoxApplyFragment || currentFragment is UpstoxHtaFragment) {
+        }/* else if (currentFragment is UpstoxApplyFragment || currentFragment is UpstoxHtaFragment) {
             replaceFragment(upstoxFragment)
             currentFragment = upstoxFragment
             return
@@ -357,9 +352,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBtn1Clicked() {
-        replaceFragment(tradingFragment1)
-        toolbar!!.visibility = View.GONE
-        currentFragment = tradingFragment1
+        showDisclaimerPopup(
+            "Disclaimer",
+            "We do not own demo Website (Virtual Trading Platform)",
+            this
+        )
     }
 
     override fun onBtn2Clicked() {
@@ -399,28 +396,34 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 startActivity(intent)
             }
             8 -> {
-                val intent = Intent(this@MainActivity, BullCandleActivity::class.java)
-                startActivity(intent)
+                replaceFragment(bullCandleFragment)
+                toolbar!!.visibility = View.GONE
+                currentFragment = bullCandleFragment
             }
             9 -> {
-                val intent = Intent(this@MainActivity, BearCandleActivity::class.java)
-                startActivity(intent)
+                replaceFragment(bearCandleFragment)
+                toolbar!!.visibility = View.GONE
+                currentFragment = bearCandleFragment
             }
             10 -> {
-                val intent = Intent(this@MainActivity, OptionChainActivity::class.java)
-                startActivity(intent)
+                replaceFragment(optionChainFragment)
+                toolbar!!.visibility = View.GONE
+                currentFragment = optionChainFragment
             }
             11 -> {
-                val intent = Intent(this@MainActivity, BullPatternActivity::class.java)
-                startActivity(intent)
+                replaceFragment(bullPatternFragment)
+                toolbar!!.visibility = View.GONE
+                currentFragment = bullPatternFragment
             }
             12 -> {
-                val intent = Intent(this@MainActivity, BearPatternActivity::class.java)
-                startActivity(intent)
+                replaceFragment(bearPatternFragment)
+                toolbar!!.visibility = View.GONE
+                currentFragment = bearPatternFragment
             }
             13 -> {
-                val intent = Intent(this@MainActivity, AllPatternActivity::class.java)
-                startActivity(intent)
+                replaceFragment(allPatternFragment)
+                toolbar!!.visibility = View.GONE
+                currentFragment = allPatternFragment
             }
             14 -> {
                 val intent = Intent(this@MainActivity, Link4Activity::class.java)
@@ -515,7 +518,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             ) { dialog: DialogInterface?, which: Int ->
                 run {
                     dialog?.dismiss()
-                    replaceFragment(tradingFragment)
+
+                    replaceFragment(tradingFragment1)
+                    toolbar!!.visibility = View.GONE
+                    currentFragment = tradingFragment1
                 }
             }
             .setNegativeButton(
