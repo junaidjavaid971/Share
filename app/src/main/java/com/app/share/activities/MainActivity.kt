@@ -303,11 +303,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 } else if (currentFragment is TradingFragment2) {
                     replaceFragment(tradingFragment2)
                 } else {
-                    if (isDialogShown) {
-                        replaceFragment(tradingFragment)
-                    } else {
-                        replaceFragment(tradingFragment)
-                    }
+                    replaceFragment(tradingFragment)
                 }
                 toolbar!!.visibility = View.GONE
                 return true
@@ -366,6 +362,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBtn2Clicked() {
+        currentFragment = tradingFragment2
         replaceFragment(tradingFragment2)
         toolbar!!.visibility = View.GONE
     }
@@ -505,9 +502,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBackPressedClicked() {
-        currentFragment = homeFragment
-        replaceFragment(homeFragment)
-        toolbar!!.visibility = View.GONE
+        if (currentFragment is TradingFragment1 || currentFragment is TradingFragment2) {
+            currentFragment = tradingFragment
+            replaceFragment(tradingFragment)
+            toolbar!!.visibility = View.GONE
+        } else {
+            currentFragment = homeFragment
+            replaceFragment(homeFragment)
+            toolbar!!.visibility = View.GONE
+        }
     }
 
     fun showDisclaimerPopup(
@@ -523,6 +526,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             ) { dialog: DialogInterface?, which: Int ->
                 run {
                     dialog?.dismiss()
+                    currentFragment = tradingFragment1
                     replaceFragment(tradingFragment1)
                     toolbar!!.visibility = View.GONE
                 }

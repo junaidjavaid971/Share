@@ -10,6 +10,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.share.R
@@ -22,6 +23,7 @@ class ZerodhaApplyFragment(var callback: Button1FragmentCallbacks) : Fragment() 
     var swipeRefreshLayout: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
 
+    lateinit var ivBack: ImageView
     lateinit var btnApply: Button
     lateinit var btnHowToApply: Button
 
@@ -44,9 +46,17 @@ class ZerodhaApplyFragment(var callback: Button1FragmentCallbacks) : Fragment() 
         }
         progressBar = view.findViewById(R.id.seekbar)
         webView = view.findViewById(R.id.webview)
+        ivBack = view.findViewById(R.id.ivBack)
 
         btnHowToApply = view.findViewById(R.id.btnHowToApply)
 
+        ivBack.setOnClickListener {
+            if (webView?.canGoBack()!!) {
+                webView?.goBack()
+            } else {
+                requireActivity().onBackPressed()
+            }
+        }
         setWebView()
         manageClicks()
     }

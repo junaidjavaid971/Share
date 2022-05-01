@@ -10,6 +10,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.share.R
@@ -34,13 +35,22 @@ class ZerodhaHtaFragment(var callbacks: Button1FragmentCallbacks) : Fragment() {
         webView = view.findViewById(R.id.webview)
         swipeRefreshLayout = view.findViewById(R.id.swipe)
         swipeRefreshLayout?.setOnRefreshListener {
-            webURL = webView?.getUrl()
+            webURL = webView?.url
             refreshWebView()
             swipeRefreshLayout?.isRefreshing = false
         }
         progressBar = view.findViewById(R.id.seekbar)
         webView = view.findViewById(R.id.webview)
         btnApply = view.findViewById(R.id.btnApply)
+
+        val ivBack = view.findViewById<ImageView>(R.id.ivBack)
+        ivBack.setOnClickListener {
+            if (webView?.canGoBack()!!) {
+                webView?.goBack()
+            } else {
+                requireActivity().onBackPressed()
+            }
+        }
 
         setWebView()
         manageClicks()

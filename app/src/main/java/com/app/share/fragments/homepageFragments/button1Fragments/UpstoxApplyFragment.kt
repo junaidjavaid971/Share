@@ -10,6 +10,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.share.R
@@ -46,6 +47,15 @@ class UpstoxApplyFragment(var callbacks: Button1FragmentCallbacks) : Fragment() 
         webView = view.findViewById(R.id.webview)
 
         btnHowToApply = view.findViewById(R.id.btnHowToApply)
+
+        val ivBack = view.findViewById<ImageView>(R.id.ivBack)
+        ivBack.setOnClickListener {
+            if (webView?.canGoBack()!!) {
+                webView?.goBack()
+            } else {
+                requireActivity().onBackPressed()
+            }
+        }
 
         setWebView()
         manageClicks()

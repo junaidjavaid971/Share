@@ -43,6 +43,15 @@ class BullCandleFragment(var homeCallback: HomeFragmentCallback) : Fragment() {
         progressBar = view.findViewById(R.id.seekbar)
         webView = view.findViewById(R.id.webview)
 
+        val ivBack = view.findViewById<ImageView>(R.id.ivBack)
+        ivBack.setOnClickListener {
+            if (webView?.canGoBack()!!) {
+                webView?.goBack()
+            } else {
+                requireActivity().onBackPressed()
+            }
+        }
+
         setWebView()
     }
 
