@@ -306,11 +306,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     if (isDialogShown) {
                         replaceFragment(tradingFragment)
                     } else {
-                        showDisclaimerPopup(
-                            "Disclaimer",
-                            "We do not own demo Website (Virtual Trading Platform)",
-                            this, 2
-                        )
+                        replaceFragment(tradingFragment)
                     }
                 }
                 toolbar!!.visibility = View.GONE
@@ -365,14 +361,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         showDisclaimerPopup(
             "Disclaimer",
             "We do not own demo Website (Virtual Trading Platform)",
-            this, 1
+            this
         )
     }
 
     override fun onBtn2Clicked() {
         replaceFragment(tradingFragment2)
         toolbar!!.visibility = View.GONE
-        currentFragment = tradingFragment2
     }
 
     override fun onHomePageButtonClicked(id: Int) {
@@ -518,8 +513,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     fun showDisclaimerPopup(
         title: String?,
         message: String?,
-        context: Context?,
-        level: Int
+        context: Context?
     ) {
         AlertDialog.Builder(context)
             .setTitle(title)
@@ -529,17 +523,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             ) { dialog: DialogInterface?, which: Int ->
                 run {
                     dialog?.dismiss()
-
-                    when (level) {
-                        1 -> {
-                            replaceFragment(tradingFragment1)
-                            toolbar!!.visibility = View.GONE
-                            currentFragment = tradingFragment1
-                        }
-                        2 -> {
-                            replaceFragment(tradingFragment)
-                        }
-                    }
+                    replaceFragment(tradingFragment1)
+                    toolbar!!.visibility = View.GONE
                 }
             }
             .setNegativeButton(

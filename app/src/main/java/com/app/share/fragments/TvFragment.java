@@ -75,7 +75,7 @@ public class TvFragment extends Fragment {
             public void onProgressChanged(WebView view, int progress) {
                 progressBar.setProgress(progress);
                 if (progress == 100)
-                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -108,7 +108,7 @@ public class TvFragment extends Fragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 

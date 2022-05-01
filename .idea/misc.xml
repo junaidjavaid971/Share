@@ -83,8 +83,11 @@
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/Share/app/src/main/res/layout/fragment_tv.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/drawable/ic_refresh.xml" value="0.1675" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/drawable/rounded_corners.xml" value="0.188" />
+        <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/activity_about.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/activity_help.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/activity_main.xml" value="0.195382642154767" />
+        <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/activity_privacy_policy.xml" value="0.195382642154767" />
+        <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/activity_terms_and_condition.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/activity_upstox.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_all_pattern.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_banner2.xml" value="0.195382642154767" />
@@ -118,7 +121,7 @@
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_trading1.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_trading2.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_tutorial.xml" value="0.195382642154767" />
-        <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_tv.xml" value="0.195382642154767" />
+        <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_tv.xml" value="0.176" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_upstox.xml" value="0.2" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_upstox_apply.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_upstox_hta.xml" value="0.195382642154767" />
@@ -128,6 +131,8 @@
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_zerodha.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_zerodha_apply.xml" value="0.195382642154767" />
         <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/fragment_zerodha_hta.xml" value="0.195382642154767" />
+        <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/nav_drawer.xml" value="0.195382642154767" />
+        <entry key="..\:/Users/Junaid Javed/Android Studio Projects/share/app/src/main/res/layout/slider_item_container.xml" value="0.195382642154767" />
       </map>
     </option>
   </component>

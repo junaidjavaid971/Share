@@ -35,6 +35,8 @@ class TradingFragment2(var homeCallback: HomeFragmentCallback) : Fragment() {
         webView = view.findViewById(R.id.webview)
         swipeRefreshLayout = view.findViewById(R.id.swipe)
         progressBar = view.findViewById(R.id.seekbar)
+        ivBack = view.findViewById(R.id.ivBack)
+        ivRefresh = view.findViewById(R.id.ivRefresh)
 
         ivBack?.setOnClickListener {
             if (webView?.canGoBack()!!) {
