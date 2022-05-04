@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.Intent.*
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
@@ -16,9 +15,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.app.share.R
-import com.app.share.utils.Utils
-import com.app.share.utils.Utils.isNetworkAvailable
-import com.app.share.utils.Utils.showAlertDialog
 import com.app.share.fragments.*
 import com.app.share.fragments.HomeFragment.HomePageButtonsClickListener
 import com.app.share.fragments.TradingFragment.TradingFragmentButtonCallbacks
@@ -28,11 +24,15 @@ import com.app.share.fragments.tradingFragments.TradingFragment1
 import com.app.share.fragments.tradingFragments.TradingFragment2
 import com.app.share.interfaces.Button1FragmentCallbacks
 import com.app.share.interfaces.HomeFragmentCallback
+import com.app.share.interfaces.TradingFragmentBackPress
+import com.app.share.utils.Utils
+import com.app.share.utils.Utils.isNetworkAvailable
+import com.app.share.utils.Utils.showAlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     TradingFragmentButtonCallbacks, HomePageButtonsClickListener, Utils.DialogButtonsCallback,
-    Button1FragmentCallbacks, HomeFragmentCallback {
+    Button1FragmentCallbacks, HomeFragmentCallback, TradingFragmentBackPress {
     var navigationView: BottomNavigationView? = null
     var drawerLayout: DrawerLayout? = null
     var ivMenu: ImageView? = null
@@ -57,17 +57,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var bearPatternFragment: BearPatternFragment? = null
     var bullCandleFragment: BullCandleFragment? = null
     var bullPatternFragment: BullPatternFragment? = null
-    var link1Activity: Link1Activity? = null
-    var link2Activity: Link2Activity? = null
-    var link3Activity: Link3Activity? = null
-    var link4Activity: Link4Activity? = null
-    var link5Activity: Link5Activity? = null
-    var link6Activity: Link6Activity? = null
     var optionChainFragment: OptionChainFragment? = null
-
-    //    var upstoxFragment: UpstoxFragment? = null
-    var wazirxActivity: WazirxActivity? = null
-    var zerodhaActivity: ZerodhaActivity? = null
 
     var upstoxApplyFragment: UpstoxApplyFragment? = null
     var upstoxHtaFragment: UpstoxHtaFragment? = null
@@ -76,10 +66,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var wazirxHtaFragment: WazirxHtaFragment? = null
     var wazirxApplyFragment: WazirxApplyFragment? = null
 
-    var isDialogShown = false
-
     var builder: AlertDialog.Builder? = null
     var currentFragment: Fragment? = null
+    var currentHomeFragment: Fragment? = null
+    var currentTradingFragment: Fragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -111,19 +102,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         bearPatternFragment = BearPatternFragment(this)
         allPatternFragment = AllPatternFragment(this)
 
-        //Home Fragments
-        /*
-        banner2Activity = Banner2Activity(this)
-        link1Activity = Link1Activity(this)
-        link2Activity = Link2Activity(this)
-        link3Activity = Link3Activity(this)
-        link4Activity = Link4Activity(this)
-        link5Activity = Link5Activity(this)
-        link6Activity = Link6Activity(this)
-        upstoxFragment = UpstoxFragment(this, this)
-        wazirxActivity = WazirxActivity(this, this)
-        zerodhaActivity = ZerodhaActivity(this, this)*/
-
         upstoxApplyFragment = UpstoxApplyFragment(this)
         upstoxHtaFragment = UpstoxHtaFragment(this)
         zerodhaApplyFragment = ZerodhaApplyFragment(this)
@@ -146,18 +124,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ft.add(R.id.flLayout, bullPatternFragment!!)
         ft.add(R.id.flLayout, bearPatternFragment!!)
         ft.add(R.id.flLayout, allPatternFragment!!)
-
-        /*
-        ft.add(R.id.flLayout, banner2Activity!!)
-        ft.add(R.id.flLayout, link1Activity!!)
-        ft.add(R.id.flLayout, link2Activity!!)
-        ft.add(R.id.flLayout, link3Activity!!)
-        ft.add(R.id.flLayout, link4Activity!!)
-        ft.add(R.id.flLayout, link5Activity!!)
-        ft.add(R.id.flLayout, link6Activity!!)
-        ft.add(R.id.flLayout, upstoxFragment!!)
-        ft.add(R.id.flLayout, wazirxActivity!!)
-        ft.add(R.id.flLayout, zerodhaActivity!!)*/
 
         ft.add(R.id.flLayout, upstoxApplyFragment!!)
         ft.add(R.id.flLayout, upstoxHtaFragment!!)
@@ -200,18 +166,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ft.hide(bearPatternFragment!!)
         ft.hide(allPatternFragment!!)
 
-        /*
-        ft.hide(banner2Activity!!)
-        ft.hide(link1Activity!!)
-        ft.hide(link2Activity!!)
-        ft.hide(link3Activity!!)
-        ft.hide(link4Activity!!)
-        ft.hide(link5Activity!!)
-        ft.hide(link6Activity!!)
-        ft.hide(upstoxFragment!!)
-        ft.hide(wazirxActivity!!)
-        ft.hide(zerodhaActivity!!)*/
-
         ft.hide(upstoxApplyFragment!!)
         ft.hide(upstoxHtaFragment!!)
         ft.hide(zerodhaApplyFragment!!)
@@ -230,61 +184,35 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         tvAbout = findViewById(R.id.tvAbout)
         tvPolicy = findViewById(R.id.tvPolicy)
         tvTerm = findViewById(R.id.tvTerms)
-        toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.mainToolbar)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mhome -> {
-                if (currentFragment is BullCandleFragment) {
+                currentFragment = homeFragment
+                if (currentHomeFragment is BullCandleFragment) {
+                    currentHomeFragment = bullCandleFragment
                     replaceFragment(bullCandleFragment)
-                } else if (currentFragment is BearCandleFragment) {
+                } else if (currentHomeFragment is BearCandleFragment) {
+                    currentHomeFragment = bearCandleFragment
                     replaceFragment(bearCandleFragment)
-                } else if (currentFragment is OptionChainFragment) {
+                } else if (currentHomeFragment is OptionChainFragment) {
+                    currentHomeFragment = optionChainFragment
                     replaceFragment(optionChainFragment)
-                } else if (currentFragment is BullPatternFragment) {
+                } else if (currentHomeFragment is BullPatternFragment) {
+                    currentHomeFragment = bullPatternFragment
                     replaceFragment(bullPatternFragment)
-                } else if (currentFragment is BearPatternFragment) {
+                } else if (currentHomeFragment is BearPatternFragment) {
+                    currentHomeFragment = bearPatternFragment
                     replaceFragment(bearPatternFragment)
-                } else if (currentFragment is AllPatternFragment) {
+                } else if (currentHomeFragment is AllPatternFragment) {
+                    currentHomeFragment = allPatternFragment
                     replaceFragment(allPatternFragment)
                 } else {
+                    currentHomeFragment = homeFragment
                     replaceFragment(homeFragment)
                 }
-                /*else if (currentFragment is Banner2Activity) {
-                    replaceFragment(banner2Activity)
-                }else if (currentFragment is Link1Activity) {
-                    replaceFragment(link1Activity)
-                } else if (currentFragment is Link2Activity) {
-                    replaceFragment(link2Activity)
-                } else if (currentFragment is Link3Activity) {
-                    replaceFragment(link3Activity)
-                } else if (currentFragment is Link4Activity) {
-                    replaceFragment(link4Activity)
-                } else if (currentFragment is Link5Activity) {
-                    replaceFragment(link5Activity)
-                } else if (currentFragment is Link6Activity) {
-                    replaceFragment(link6Activity)
-                } }*//* else if (currentFragment is UpstoxFragment) {
-                    replaceFragment(upstoxFragment)
-                }*//* else if (currentFragment is WazirxActivity) {
-                    replaceFragment(wazirxActivity)
-                } else if (currentFragment is ZerodhaActivity) {
-                    replaceFragment(zerodhaActivity)
-                } else if (currentFragment is ZerodhaHtaFragment) {
-                    replaceFragment(zerodhaHtaFragment)
-                } else if (currentFragment is ZerodhaApplyFragment) {
-                    replaceFragment(zerodhaApplyFragment)
-                } else if (currentFragment is WazirxApplyFragment) {
-                    replaceFragment(wazirxApplyFragment)
-                } else if (currentFragment is WazirxHtaFragment) {
-                    replaceFragment(wazirxHtaFragment)
-                } else if (currentFragment is UpstoxHtaFragment) {
-                    replaceFragment(upstoxHtaFragment)
-                } else if (currentFragment is UpstoxApplyFragment) {
-                    replaceFragment(upstoxApplyFragment)
-                }*/
-                toolbar!!.visibility = View.GONE
                 return true
             }
             R.id.mlearn -> {
@@ -298,11 +226,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.mtrading -> {
-                if (currentFragment is TradingFragment1) {
+                currentFragment = tradingFragment
+                if (currentTradingFragment is TradingFragment1) {
                     replaceFragment(tradingFragment1)
-                } else if (currentFragment is TradingFragment2) {
+                } else if (currentTradingFragment is TradingFragment2) {
                     replaceFragment(tradingFragment2)
                 } else {
+                    currentTradingFragment = tradingFragment
                     replaceFragment(tradingFragment)
                 }
                 toolbar!!.visibility = View.GONE
@@ -318,30 +248,21 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBackPressed() {
-        if (currentFragment is TradingFragment1 || currentFragment is TradingFragment2) {
-            replaceFragment(tradingFragment)
+        if (currentFragment is TradingFragment && currentTradingFragment is TradingFragment) {
+            showExitAlert()
+            return
+        } else if (currentFragment is TradingFragment) {
             currentFragment = tradingFragment
+            replaceFragment(tradingFragment)
             return
-        } else if (currentFragment is BullCandleFragment || currentFragment is BearCandleFragment || currentFragment is OptionChainFragment
-            || currentFragment is BullPatternFragment || currentFragment is BearPatternFragment || currentFragment is AllPatternFragment
-        ) {
+        } else if (currentFragment is HomeFragment && currentHomeFragment is HomeFragment) {
+            showExitAlert()
+            return
+        } else if (currentFragment is HomeFragment) {
+            currentHomeFragment = homeFragment
             replaceFragment(homeFragment)
-            currentFragment = homeFragment
             return
-        }/* else if (currentFragment is UpstoxApplyFragment || currentFragment is UpstoxHtaFragment) {
-            replaceFragment(upstoxFragment)
-            currentFragment = upstoxFragment
-            return
-        } else if (currentFragment is ZerodhaApplyFragment || currentFragment is ZerodhaHtaFragment) {
-            replaceFragment(zerodhaActivity)
-            currentFragment = zerodhaActivity
-            return
-        } else if (currentFragment is WazirxHtaFragment || currentFragment is WazirxApplyFragment) {
-            replaceFragment(wazirxActivity)
-            currentFragment = wazirxActivity
-            return
-        }*/
-        showExitAlert()
+        }
     }
 
     private fun showExitAlert() {
@@ -362,7 +283,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBtn2Clicked() {
-        currentFragment = tradingFragment2
+        currentTradingFragment = tradingFragment2
         replaceFragment(tradingFragment2)
         toolbar!!.visibility = View.GONE
     }
@@ -400,32 +321,32 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             8 -> {
                 replaceFragment(bullCandleFragment)
                 toolbar!!.visibility = View.GONE
-                currentFragment = bullCandleFragment
+                currentHomeFragment = bullCandleFragment
             }
             9 -> {
                 replaceFragment(bearCandleFragment)
                 toolbar!!.visibility = View.GONE
-                currentFragment = bearCandleFragment
+                currentHomeFragment = bearCandleFragment
             }
             10 -> {
                 replaceFragment(optionChainFragment)
                 toolbar!!.visibility = View.GONE
-                currentFragment = optionChainFragment
+                currentHomeFragment = optionChainFragment
             }
             11 -> {
                 replaceFragment(bullPatternFragment)
                 toolbar!!.visibility = View.GONE
-                currentFragment = bullPatternFragment
+                currentHomeFragment = bullPatternFragment
             }
             12 -> {
                 replaceFragment(bearPatternFragment)
                 toolbar!!.visibility = View.GONE
-                currentFragment = bearPatternFragment
+                currentHomeFragment = bearPatternFragment
             }
             13 -> {
                 replaceFragment(allPatternFragment)
                 toolbar!!.visibility = View.GONE
-                currentFragment = allPatternFragment
+                currentHomeFragment = allPatternFragment
             }
             14 -> {
                 val intent = Intent(this@MainActivity, Link4Activity::class.java)
@@ -466,54 +387,58 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onUpstoxApplyClicked() {
-        currentFragment = upstoxApplyFragment
+        currentHomeFragment = upstoxApplyFragment
         replaceFragment(upstoxApplyFragment)
         toolbar!!.visibility = View.GONE
     }
 
     override fun onUpstoxHTAClicked() {
-        currentFragment = upstoxHtaFragment
+        currentHomeFragment = upstoxHtaFragment
         replaceFragment(upstoxHtaFragment)
         toolbar!!.visibility = View.GONE
     }
 
     override fun onZerodhaApplyClicked() {
-        currentFragment = zerodhaApplyFragment
+        currentHomeFragment = zerodhaApplyFragment
         replaceFragment(zerodhaApplyFragment)
         toolbar!!.visibility = View.GONE
     }
 
     override fun onZerodhaHtaClicked() {
-        currentFragment = zerodhaHtaFragment
+        currentHomeFragment = zerodhaHtaFragment
         replaceFragment(zerodhaHtaFragment)
         toolbar!!.visibility = View.GONE
     }
 
     override fun onWazirxApplyClicked() {
-        currentFragment = wazirxApplyFragment
+        currentHomeFragment = wazirxApplyFragment
         replaceFragment(wazirxApplyFragment)
         toolbar!!.visibility = View.GONE
     }
 
     override fun onWazirxHtaClicked() {
-        currentFragment = wazirxHtaFragment
+        currentHomeFragment = wazirxHtaFragment
         replaceFragment(wazirxHtaFragment)
         toolbar!!.visibility = View.GONE
     }
 
     override fun onBackPressedClicked() {
-        if (currentFragment is TradingFragment1 || currentFragment is TradingFragment2) {
-            currentFragment = tradingFragment
+        currentHomeFragment = homeFragment
+        replaceFragment(homeFragment)
+        toolbar!!.visibility = View.GONE
+    }
+
+    override fun onTradingFragmentBackPressed() {
+        if (currentTradingFragment is TradingFragment1 || currentTradingFragment is TradingFragment2) {
+            currentTradingFragment = tradingFragment
             replaceFragment(tradingFragment)
             toolbar!!.visibility = View.GONE
-        } else {
-            currentFragment = homeFragment
-            replaceFragment(homeFragment)
-            toolbar!!.visibility = View.GONE
+        } else if (currentTradingFragment is TradingFragment) {
+            super.onBackPressed()
         }
     }
 
-    fun showDisclaimerPopup(
+    private fun showDisclaimerPopup(
         title: String?,
         message: String?,
         context: Context?
@@ -526,7 +451,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             ) { dialog: DialogInterface?, which: Int ->
                 run {
                     dialog?.dismiss()
-                    currentFragment = tradingFragment1
+                    currentTradingFragment = tradingFragment1
                     replaceFragment(tradingFragment1)
                     toolbar!!.visibility = View.GONE
                 }
@@ -541,4 +466,5 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .setCancelable(false)
             .show()
     }
+
 }

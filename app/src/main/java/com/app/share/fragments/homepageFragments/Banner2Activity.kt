@@ -3,18 +3,15 @@ package com.app.share.fragments.homepageFragments
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.view.KeyEvent
+import android.view.MotionEvent
+import android.view.View
+import android.webkit.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.share.R
-import com.app.share.interfaces.HomeFragmentCallback
 
 class Banner2Activity : AppCompatActivity() {
     var webView: WebView? = null
@@ -65,6 +62,7 @@ class Banner2Activity : AppCompatActivity() {
         webView!!.settings.setAppCacheEnabled(true)
         webView!!.settings.domStorageEnabled = true
         webView!!.overScrollMode = WebView.OVER_SCROLL_NEVER
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
         webView!!.webChromeClient = webChromeClient
 

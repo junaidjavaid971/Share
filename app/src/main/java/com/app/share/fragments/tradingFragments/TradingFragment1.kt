@@ -1,22 +1,22 @@
 package com.app.share.fragments.tradingFragments
 
-import android.webkit.WebView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.widget.ProgressBar
 import android.os.Bundle
 import com.app.share.R
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import android.annotation.SuppressLint
-import android.webkit.WebSettings
-import android.webkit.WebChromeClient
-import android.webkit.WebViewClient
+import android.content.Intent
 import android.graphics.Bitmap
 import android.view.*
+import android.webkit.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.app.share.activities.HelpActivity
 import com.app.share.interfaces.HomeFragmentCallback
+import com.app.share.interfaces.TradingFragmentBackPress
 
-class TradingFragment1(var homeCallback: HomeFragmentCallback) : Fragment() {
+class TradingFragment1(var homeCallback: TradingFragmentBackPress) : Fragment() {
     var webView: WebView? = null
     var webURL: String? = "https://www.amazon.in/"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
@@ -42,12 +42,17 @@ class TradingFragment1(var homeCallback: HomeFragmentCallback) : Fragment() {
         progressBar = view.findViewById(R.id.seekbar)
         webView = view.findViewById(R.id.webview)
         ivBack = view.findViewById(R.id.ivBack)
+        val ivHelp = view.findViewById<ImageView>(R.id.ivHelp)
+
+        ivHelp.setOnClickListener {
+            startActivity(Intent(requireActivity(), HelpActivity::class.java))
+        }
 
         ivBack?.setOnClickListener {
             if (webView?.canGoBack()!!) {
                 webView?.goBack()
             } else {
-                homeCallback.onBackPressedClicked()
+                homeCallback.onTradingFragmentBackPressed()
             }
         }
 
@@ -69,6 +74,7 @@ class TradingFragment1(var homeCallback: HomeFragmentCallback) : Fragment() {
         webView!!.settings.setAppCacheEnabled(true)
         webView!!.settings.domStorageEnabled = true
         webView!!.overScrollMode = WebView.OVER_SCROLL_NEVER
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
         webView!!.webChromeClient = webChromeClient
 

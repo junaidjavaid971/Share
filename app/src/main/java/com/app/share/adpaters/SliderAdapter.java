@@ -1,6 +1,7 @@
 package com.app.share.adpaters;
 
 import android.view.LayoutInflater;
+import android.webkit.*;
 import android.view.View;
 import android.view.ViewGroup;
 

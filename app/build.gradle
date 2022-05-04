@@ -10,8 +10,8 @@ android {
         applicationId "com.app.share"
         minSdk 21
         targetSdk 31
-        versionCode 9
-        versionName "6.3"
+        versionCode 10
+        versionName "6.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,5 +70,6 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
+    implementation "com.github.bumptech.glide:glide:4.13.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.13.0"
 }

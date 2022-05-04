@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.webkit.*;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -75,7 +76,7 @@ public class TvFragment extends Fragment {
             public void onProgressChanged(WebView view, int progress) {
                 progressBar.setProgress(progress);
                 if (progress == 100)
-                    progressBar.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.GONE);
             }
         });
 
@@ -108,7 +109,7 @@ public class TvFragment extends Fragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.GONE);
         }
     }
 

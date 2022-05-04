@@ -1,21 +1,19 @@
 package com.app.share.fragments.tradingFragments
 
-import android.webkit.WebView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.widget.ProgressBar
 import android.os.Bundle
 import com.app.share.R
 import android.annotation.SuppressLint
-import android.webkit.WebSettings
-import android.webkit.WebChromeClient
-import android.webkit.WebViewClient
 import android.graphics.Bitmap
 import android.view.*
+import android.webkit.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.app.share.interfaces.HomeFragmentCallback
+import com.app.share.interfaces.TradingFragmentBackPress
 
-class TradingFragment2(var homeCallback: HomeFragmentCallback) : Fragment() {
+class TradingFragment2(var homeCallback: TradingFragmentBackPress) : Fragment() {
     var webView: WebView? = null
     var webURL: String? = "https://www.amazon.in/"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
@@ -42,7 +40,7 @@ class TradingFragment2(var homeCallback: HomeFragmentCallback) : Fragment() {
             if (webView?.canGoBack()!!) {
                 webView?.goBack()
             } else {
-                homeCallback.onBackPressedClicked()
+                homeCallback.onTradingFragmentBackPressed()
             }
         }
 
@@ -51,11 +49,6 @@ class TradingFragment2(var homeCallback: HomeFragmentCallback) : Fragment() {
             refreshWebView()
         }
 
-        swipeRefreshLayout?.setOnRefreshListener {
-            webURL = webView?.url
-            refreshWebView()
-            swipeRefreshLayout?.isRefreshing = false
-        }
         setWebView()
     }
 
@@ -74,6 +67,7 @@ class TradingFragment2(var homeCallback: HomeFragmentCallback) : Fragment() {
         webView!!.settings.setAppCacheEnabled(true)
         webView!!.settings.domStorageEnabled = true
         webView!!.overScrollMode = WebView.OVER_SCROLL_NEVER
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
         webView!!.webChromeClient = webChromeClient
 

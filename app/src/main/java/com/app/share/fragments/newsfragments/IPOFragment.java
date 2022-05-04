@@ -12,6 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.webkit.*;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;

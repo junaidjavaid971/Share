@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.*
+import android.webkit.*
 import androidx.fragment.app.Fragment
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -48,7 +45,7 @@ class BullCandleFragment(var homeCallback: HomeFragmentCallback) : Fragment() {
             if (webView?.canGoBack()!!) {
                 webView?.goBack()
             } else {
-                requireActivity().onBackPressed()
+                homeCallback.onBackPressedClicked()
             }
         }
 
@@ -70,6 +67,7 @@ class BullCandleFragment(var homeCallback: HomeFragmentCallback) : Fragment() {
         webView!!.settings.setAppCacheEnabled(true)
         webView!!.settings.domStorageEnabled = true
         webView!!.overScrollMode = WebView.OVER_SCROLL_NEVER
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
         webView!!.webChromeClient = webChromeClient
 

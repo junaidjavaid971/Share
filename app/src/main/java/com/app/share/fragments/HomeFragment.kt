@@ -1,23 +1,22 @@
 package com.app.share.fragments
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import com.app.share.R
-import com.app.share.utils.SliderItem
-import com.app.share.adpaters.SliderAdapter
+import android.os.Handler
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import android.content.Intent
-import android.net.Uri
-import android.os.Handler
-import android.view.View
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import com.app.share.R
+import com.app.share.adpaters.SliderAdapter
 import com.app.share.databinding.FragmentHomeBinding
-import java.util.ArrayList
+import com.app.share.utils.SliderItem
 
 class HomeFragment(var callback: HomePageButtonsClickListener) : Fragment() {
     private val sliderHandler = Handler()

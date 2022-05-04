@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.webkit.*
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -57,6 +58,7 @@ class HelpActivity : AppCompatActivity() {
         webView!!.settings.setAppCacheEnabled(true)
         webView!!.settings.domStorageEnabled = true
         webView!!.overScrollMode = WebView.OVER_SCROLL_NEVER
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
         webView!!.webChromeClient = webChromeClient
 
