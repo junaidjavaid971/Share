@@ -1,99 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.NewsFragment">
+    android:layout_height="match_parent">
 
-
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView2"
+    <LinearLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_35sdp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_left" />
+
+        <ProgressBar
+            android:id="@+id/seekbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_1sdp"
-            android:background="@drawable/tvshape"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:max="100"
+            android:progress="1"
+            android:progressTint="#4CAF50" />
 
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvMarkets"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:background="@drawable/horizontal_tv_shape"
-                android:padding="@dimen/_5sdp"
-                android:text="@string/str_Markets"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tvStocks"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:background="@drawable/horizontal_tv_shape"
-                android:padding="@dimen/_5sdp"
-                android:text="@string/str_Stocks"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tvCrypto"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:background="@drawable/horizontal_tv_shape"
-                android:padding="@dimen/_5sdp"
-                android:text="@string/str_Crypto"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-
-
-
-            <TextView
-                android:id="@+id/tvGlobal"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:background="@drawable/horizontal_tv_shape"
-                android:padding="@dimen/_5sdp"
-                android:text="@string/str_NFT"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tvIPO"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:background="@drawable/horizontal_tv_shape"
-                android:padding="@dimen/_5sdp"
-                android:text="@string/str_IPO"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <FrameLayout
-        android:id="@+id/framelayout"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2"
-        app:layout_constraintVertical_bias="0.496" />
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/tvAdSpace"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/seekbar" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/tvAdSpace"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Space for Ads"
+        android:textSize="@dimen/_14ssp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

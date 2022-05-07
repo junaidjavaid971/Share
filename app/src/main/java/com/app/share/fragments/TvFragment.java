@@ -51,10 +51,10 @@ public class TvFragment extends Fragment {
         progressBar = view.findViewById(R.id.seekbar);
         webView = view.findViewById(R.id.webview);
 
-
         ivRefresh.setOnClickListener(v -> {
             refreshWebView();
         });
+
         setWebView();
     }
 

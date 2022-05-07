@@ -1,51 +1,58 @@
-package com.app.share.fragments.tradingFragments
+package com.app.share.fragments
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import android.widget.ProgressBar
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Bitmap
+import android.widget.TextView
+import com.app.share.fragments.newsfragments.MarketFragment
+import com.app.share.fragments.newsfragments.StocksFragment
+import com.app.share.fragments.newsfragments.CryptoFragment
+import com.app.share.fragments.newsfragments.IPOFragment
+import com.app.share.fragments.newsfragments.GlobalFragment
 import android.os.Bundle
 import com.app.share.R
-import android.annotation.SuppressLint
-import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.*
 import android.webkit.*
 import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
-import com.app.share.interfaces.HomeFragmentCallback
-import com.app.share.interfaces.TradingFragmentBackPress
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.app.share.activities.HelpActivity
 
-class TradingFragment2(var homeCallback: TradingFragmentBackPress) : Fragment() {
+class NewsFragment : Fragment() {
     var webView: WebView? = null
     var webURL: String? = "https://www.amazon.in/"
     var swipeRefreshLayout: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
-
     var ivBack: ImageView? = null
-    var ivRefresh: ImageView? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_trading2, container, false)
+        return inflater.inflate(R.layout.fragment_news, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         webView = view.findViewById(R.id.webview)
         swipeRefreshLayout = view.findViewById(R.id.swipe)
+        swipeRefreshLayout?.setOnRefreshListener {
+            webURL = webView?.url
+            refreshWebView()
+            swipeRefreshLayout?.isRefreshing = false
+        }
         progressBar = view.findViewById(R.id.seekbar)
+        webView = view.findViewById(R.id.webview)
         ivBack = view.findViewById(R.id.ivBack)
-        ivRefresh = view.findViewById(R.id.ivRefresh)
-
         ivBack?.setOnClickListener {
             if (webView?.canGoBack()!!) {
                 webView?.goBack()
             } else {
-                homeCallback.onTradingFragmentBackPressed()
+                requireActivity().onBackPressed()
             }
-        }
-
-        ivRefresh?.setOnClickListener {
-            refreshWebView()
         }
 
         setWebView()
