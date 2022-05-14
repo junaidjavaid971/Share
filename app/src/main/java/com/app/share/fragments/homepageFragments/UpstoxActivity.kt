@@ -28,7 +28,6 @@ class UpstoxActivity : AppCompatActivity(), Button1FragmentCallbacks {
 
     var currentFragment: Fragment? = null
 
-    lateinit var upstoxFragment: UpstoxFragment
     lateinit var upstoxApplyFragment: UpstoxApplyFragment
     lateinit var upstoxHtaFragment: UpstoxHtaFragment
 
@@ -37,17 +36,15 @@ class UpstoxActivity : AppCompatActivity(), Button1FragmentCallbacks {
         setContentView(R.layout.activity_upstox)
 
         addFragments()
-        replaceFragment(upstoxFragment)
+        replaceFragment(upstoxApplyFragment)
     }
 
     private fun addFragments() {
-        upstoxFragment = UpstoxFragment(this)
         upstoxHtaFragment = UpstoxHtaFragment(this)
         upstoxApplyFragment = UpstoxApplyFragment(this)
 
         val ft = supportFragmentManager.beginTransaction()
 
-        ft.add(R.id.flLayout, upstoxFragment)
         ft.add(R.id.flLayout, upstoxApplyFragment)
         ft.add(R.id.flLayout, upstoxHtaFragment)
         ft.commit()
@@ -56,7 +53,6 @@ class UpstoxActivity : AppCompatActivity(), Button1FragmentCallbacks {
     private fun replaceFragment(fragment: Fragment) {
         val ft = supportFragmentManager.beginTransaction()
 
-        ft.hide(upstoxFragment)
         ft.hide(upstoxApplyFragment)
         ft.hide(upstoxHtaFragment)
 
@@ -65,11 +61,7 @@ class UpstoxActivity : AppCompatActivity(), Button1FragmentCallbacks {
     }
 
     override fun onBackPressed() {
-        if (currentFragment is UpstoxApplyFragment || currentFragment is UpstoxHtaFragment) {
-            replaceFragment(upstoxFragment)
-        } else {
-            super.onBackPressed()
-        }
+        super.onBackPressed()
     }
 
     override fun onUpstoxApplyClicked() {

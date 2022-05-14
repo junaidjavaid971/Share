@@ -28,7 +28,6 @@ class WazirxActivity : AppCompatActivity(), Button1FragmentCallbacks {
 
     var currentFragment: Fragment? = null
 
-    lateinit var wazirxFragment: WazirxFragment
     lateinit var wazirxApplyFragment: WazirxApplyFragment
     lateinit var wazirxHtaFragment: WazirxHtaFragment
 
@@ -37,17 +36,14 @@ class WazirxActivity : AppCompatActivity(), Button1FragmentCallbacks {
         setContentView(R.layout.activity_upstox)
 
         addFragments()
-        replaceFragment(wazirxFragment)
     }
 
     private fun addFragments() {
-        wazirxFragment = WazirxFragment(this)
         wazirxApplyFragment = WazirxApplyFragment(this)
         wazirxHtaFragment = WazirxHtaFragment(this)
 
         val ft = supportFragmentManager.beginTransaction()
 
-        ft.add(R.id.flLayout, wazirxFragment)
         ft.add(R.id.flLayout, wazirxApplyFragment)
         ft.add(R.id.flLayout, wazirxHtaFragment)
         ft.commit()
@@ -56,20 +52,11 @@ class WazirxActivity : AppCompatActivity(), Button1FragmentCallbacks {
     private fun replaceFragment(fragment: Fragment) {
         val ft = supportFragmentManager.beginTransaction()
 
-        ft.hide(wazirxFragment)
         ft.hide(wazirxApplyFragment)
         ft.hide(wazirxHtaFragment)
 
         ft.show(fragment)
         ft.commit()
-    }
-
-    override fun onBackPressed() {
-        if (currentFragment is WazirxApplyFragment || currentFragment is WazirxHtaFragment) {
-            replaceFragment(wazirxFragment)
-        } else {
-            super.onBackPressed()
-        }
     }
 
     override fun onUpstoxApplyClicked() {

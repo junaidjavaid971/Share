@@ -190,6 +190,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mhome -> {
+                toolbar?.visibility = View.VISIBLE
                 currentFragment = homeFragment
                 if (currentHomeFragment is BullCandleFragment) {
                     currentHomeFragment = bullCandleFragment
@@ -216,11 +217,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.mlearn -> {
+                currentFragment = learnFragment
                 replaceFragment(learnFragment)
                 toolbar!!.visibility = View.GONE
                 return true
             }
             R.id.mtelevison -> {
+                currentFragment = tvFragment
                 replaceFragment(tvFragment)
                 toolbar!!.visibility = View.GONE
                 return true
@@ -239,6 +242,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.mnews -> {
+                currentFragment = newsFragment
                 replaceFragment(newsFragment)
                 toolbar!!.visibility = View.GONE
                 return true
@@ -262,6 +266,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             currentHomeFragment = homeFragment
             replaceFragment(homeFragment)
             return
+        } else {
+            showExitAlert()
         }
     }
 
@@ -461,6 +467,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             ) { dialog: DialogInterface?, which: Int ->
                 dialog?.dismiss()
                 startActivity(Intent(this@MainActivity, HelpActivity::class.java))
+            }
+            .setNeutralButton("Close") { dialog: DialogInterface?, which: Int ->
+                dialog?.dismiss()
             }
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setCancelable(false)

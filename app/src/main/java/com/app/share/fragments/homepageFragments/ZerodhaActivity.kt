@@ -27,7 +27,6 @@ class ZerodhaActivity : AppCompatActivity(), Button1FragmentCallbacks {
 
     var currentFragment: Fragment? = null
 
-    lateinit var zerodhaFragment: ZerodhaFragment
     lateinit var zerodhaHtaFragment: ZerodhaHtaFragment
     lateinit var zerodhaApplyFragment: ZerodhaApplyFragment
 
@@ -36,17 +35,14 @@ class ZerodhaActivity : AppCompatActivity(), Button1FragmentCallbacks {
         setContentView(R.layout.activity_upstox)
 
         addFragments()
-        replaceFragment(zerodhaFragment)
     }
 
     private fun addFragments() {
-        zerodhaFragment = ZerodhaFragment(this)
         zerodhaHtaFragment = ZerodhaHtaFragment(this)
         zerodhaApplyFragment = ZerodhaApplyFragment(this)
 
         val ft = supportFragmentManager.beginTransaction()
 
-        ft.add(R.id.flLayout, zerodhaFragment)
         ft.add(R.id.flLayout, zerodhaHtaFragment)
         ft.add(R.id.flLayout, zerodhaApplyFragment)
         ft.commit()
@@ -55,20 +51,11 @@ class ZerodhaActivity : AppCompatActivity(), Button1FragmentCallbacks {
     private fun replaceFragment(fragment: Fragment) {
         val ft = supportFragmentManager.beginTransaction()
 
-        ft.hide(zerodhaFragment)
         ft.hide(zerodhaHtaFragment)
         ft.hide(zerodhaApplyFragment)
 
         ft.show(fragment)
         ft.commit()
-    }
-
-    override fun onBackPressed() {
-        if (currentFragment is ZerodhaApplyFragment || currentFragment is ZerodhaHtaFragment) {
-            replaceFragment(zerodhaFragment)
-        } else {
-            super.onBackPressed()
-        }
     }
 
     override fun onUpstoxApplyClicked() {
